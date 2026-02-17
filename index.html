@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Pediátrica Multi-Dosis</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); max-width: 450px; width: 100%; }
+        h2 { color: var(--primary); text-align: center; margin-bottom: 20px; }
+        label { display: block; margin-top: 12px; font-weight: 600; color: #475569; }
+        select, input, button { width: 100%; padding: 12px; margin-top: 8px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; }
+        select:focus, input:focus { border-color: var(--primary); }
+        button { background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; }
+        button:hover { background: #1d4ed8; }
+        #resultado-caja { margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 12px; text-align: center; display: none; border: 1px solid #bfdbfe; }
+        .dosis-valor { font-size: 24px; color: var(--primary); font-weight: 800; display: block; }
+        .info-extra { font-size: 13px; color: #64748b; margin-top: 15px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Calculadora Médica</h2>
+    
+    <label>1. Selecciona Medicamento:</label>
+    <select id="medicamento" onchange="actualizarPresentaciones()">
+        <option value="acetaminofen">Acetaminofén (Paracetamol)</option>
+        <option value="ibuprofeno">Ibuprofeno</option>
+    </select>
+
+    <label>2. Presentación:</label>
+    <select id="presentacion">
+        </select>
+
+    <label>3. Peso del niño (kg):</label>
+    <input type="number" id="peso" placeholder="Ej. 10" step="0.1">
+
+    <button onclick="calcular()">Calcular Dosis Exacta</button>
+
+    <div id="resultado-caja">
+        <span id="texto-med"></span>
+        <span class="dosis-valor" id="res-ml">0 ml</span>
+        <span id="frecuencia"></span>
+    </div>
+
+    <div class="info-extra">
+        ⚠️ <b>Importante:</b> Los cálculos se basan en dosis estándar (Acetaminofén 15mg/kg e Ibuprofeno 10mg/kg). <b>Nunca automedique sin supervisión médica.</b>
+    </div>
+</div>
+
+<script>
+    const datosMed = {
+        acetaminofen: {
+            frecuencia: "Cada 6 horas",
+            dosisBase: 15,
+            opciones: [
+                { nombre: "Gotas (100mg/1ml)", factor: 0.15 },
+                { nombre: "Jarabe (120mg/5ml)", factor: 0.625 },
+                { nombre: "Jarabe Fuerte (250mg/5ml)", factor: 0.3 }
+            ]
+        },
+        ibuprofeno: {
+            frecuencia: "Cada 8 horas",
+            dosisBase: 10,
+            opciones: [
+                { nombre: "Suspensión (100mg/5ml)", factor: 0.5 },
+                { nombre: "Suspensión Forte (200mg/5ml)", factor: 0.25 }
+            ]
+        }
+    };
+
+    function actualizarPresentaciones() {
+        const med = document.getElementById('medicamento').value;
+        const selectPres = document.getElementById('presentacion');
+        selectPres.innerHTML = ""; // Limpiar
+        
+        datosMed[med].opciones.forEach(opt => {
+            let el = document.createElement("option");
+            el.textContent = opt.nombre;
+            el.value = opt.factor;
+            selectPres.appendChild(el);
+        });
+    }
+
+    function calcular() {
+        const peso = parseFloat(document.getElementById('peso').value);
+        const factor = parseFloat(document.getElementById('presentacion').value);
+        const medKey = document.getElementById('medicamento').value;
+        
+        if (peso > 0) {
+            const dosisFinal = (peso * factor).toFixed(1);
+            document.getElementById('resultado-caja').style.display = 'block';
+            document.getElementById('texto-med').innerText = "Dosis de " + medKey.charAt(0).toUpperCase() + medKey.slice(1) + ":";
+            document.getElementById('res-ml').innerText = dosisFinal + " ml";
+            document.getElementById('frecuencia').innerText = datosMed[medKey].frecuencia;
+        } else {
+            alert("Por favor ingresa un peso válido.");
+        }
+    }
+
+    // Inicializar al cargar
+    actualizarPresentaciones();
+</script>
+
+</body>
+</html>
