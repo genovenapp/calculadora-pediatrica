@@ -6,26 +6,33 @@
     <title>Calculadora Pediátrica Multi-Dosis</title>
     <style>
         :root { --primary: #2563eb; --bg: #f8fafc; }
-        <div style="width: 100%; max-width: 450px; margin: 0 auto 15px auto;">
-    <a href="https://programassaludvenezuela.blogspot.com/" 
-       style="display: inline-flex; align-items: center; text-decoration: none; color: #3f51b5; font-weight: bold; font-size: 14px; background: #e8eaf6; padding: 10px 15px; border-radius: 10px;">
-       <span style="margin-right: 8px;">🏠</span> Volver al Menú Principal
-    </a>
-</div>
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; }
         .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); max-width: 450px; width: 100%; }
         h2 { color: var(--primary); text-align: center; margin-bottom: 20px; }
         label { display: block; margin-top: 12px; font-weight: 600; color: #475569; }
-        select, input, button { width: 100%; padding: 12px; margin-top: 8px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; }
+        select, input, button { width: 100%; padding: 12px; margin-top: 8px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; box-sizing: border-box; }
         select:focus, input:focus { border-color: var(--primary); }
         button { background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; }
         button:hover { background: #1d4ed8; }
         #resultado-caja { margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 12px; text-align: center; display: none; border: 1px solid #bfdbfe; }
         .dosis-valor { font-size: 24px; color: var(--primary); font-weight: 800; display: block; }
         .info-extra { font-size: 13px; color: #64748b; margin-top: 15px; line-height: 1.4; }
+        
+        /* Estilo para el botón de retorno */
+        .btn-volver {
+            display: inline-flex; align-items: center; text-decoration: none; 
+            color: #ffffff; font-weight: bold; font-size: 14px; background: #3f51b5; 
+            padding: 12px 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px; transition: 0.3s;
+        }
+        .btn-volver:hover { background: #283593; transform: scale(1.02); }
     </style>
 </head>
 <body>
+
+<a href="https://programassaludvenezuela.blogspot.com/" class="btn-volver">
+    <span style="margin-right: 10px;">🏠</span> Volver al Menú Principal
+</a>
 
 <div class="card">
     <h2>Calculadora Médica</h2>
@@ -37,8 +44,7 @@
     </select>
 
     <label>2. Presentación:</label>
-    <select id="presentacion">
-        </select>
+    <select id="presentacion"></select>
 
     <label>3. Peso del niño (kg):</label>
     <input type="number" id="peso" placeholder="Ej. 10" step="0.1">
@@ -80,7 +86,7 @@
     function actualizarPresentaciones() {
         const med = document.getElementById('medicamento').value;
         const selectPres = document.getElementById('presentacion');
-        selectPres.innerHTML = ""; // Limpiar
+        selectPres.innerHTML = ""; 
         
         datosMed[med].opciones.forEach(opt => {
             let el = document.createElement("option");
@@ -106,10 +112,8 @@
         }
     }
 
-    // Inicializar al cargar
     actualizarPresentaciones();
 </script>
 
 </body>
-
 </html>
