@@ -370,7 +370,7 @@
             padding-top: 20px;
         }
 
-        /* ===== FOOTER CON CRÉDITOS CORREGIDO ===== */
+        /* ===== FOOTER CON CRÉDITOS ===== */
         .version-footer {
             font-size: 0.75rem;
             margin-top: 20px;
@@ -469,7 +469,8 @@
                 Peso estimado: <span class="peso-valor" id="pesoValor">10.5 kg</span>
             </div>
             
-            <button class="aplicar-peso" id="aplicarPesoBtn">✔ Aplicar este peso</button>
+            <!-- BOTÓN CORREGIDO - EL CÓDIGO HTML SE REEMPLAZÓ POR EL SÍMBOLO DIRECTAMENTE -->
+            <button class="aplicar-peso" id="aplicarPesoBtn">✓ Aplicar este peso</button>
         </div>
     </div>
 
@@ -490,7 +491,7 @@
         <i>Uso exclusivo para personal de salud.</i>
     </div>
 
-    <!-- ===== FOOTER CORREGIDO CON CRÉDITOS ===== -->
+    <!-- FOOTER CON CRÉDITOS -->
     <div class="version-footer">
         <div>PSV - Programa Salud Venezuela</div>
         <div class="creditos">
@@ -606,11 +607,12 @@
                 const peso = calculos.pesoPorEdad(parseInt(slider.value));
                 document.getElementById('peso').value = peso.toFixed(1);
                 
+                // Feedback visual con checkmark
                 aplicarBtn.style.background = '#10b981';
-                aplicarBtn.textContent = '✓ Peso aplicado';
+                aplicarBtn.innerHTML = '✓ Peso aplicado';
                 setTimeout(() => {
                     aplicarBtn.style.background = 'var(--primary)';
-                    aplicarBtn.textContent = '✔ Aplicar este peso';
+                    aplicarBtn.innerHTML = '✓ Aplicar este peso';
                 }, 1500);
             });
             
