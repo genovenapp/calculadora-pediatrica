@@ -16,12 +16,43 @@
             --primary: #3f51b5;
             --primary-light: #5c6bc0;
             --bg: #f4f7f6; 
+            --card-bg: #ffffff;
             --text: #2c3e50;
+            --label: #475569;
             --border: #e2e8f0;
+            --input-bg: #ffffff;
             --success-bg: #eff6ff;
             --success-border: #bfdbfe;
             --alert: #dc2626;
             --gray-light: #94a3b8;
+            --slider-track: #d1d5db;
+        }
+
+        /* Variables para el Tema Oscuro */
+        body.dark-theme {
+            --bg: #121212; 
+            --card-bg: #1e1e1e;
+            --text: #e2e8f0;
+            --label: #94a3b8;
+            --border: #334155;
+            --input-bg: #2d2d2d;
+            --success-bg: #1e293b;
+            --success-border: #334155;
+            --slider-track: #4b5563;
+        }
+
+        body.dark-theme .frecuencia {
+            color: #60a5fa;
+        }
+        
+        body.dark-theme select option {
+            background-color: #2d2d2d;
+            color: #e2e8f0;
+        }
+        
+        body.dark-theme .max-alert {
+            background-color: rgba(220, 38, 38, 0.2);
+            color: #f87171;
         }
 
         body { 
@@ -32,35 +63,58 @@
             align-items: center; 
             min-height: 100vh;
             padding: 20px; 
-            margin: 0;
             color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
         }
 
         .back-link {
             align-self: flex-start;
             text-decoration: none;
-            color: #64748b;
+            color: var(--label);
             font-size: 0.9rem;
             margin-bottom: 20px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: background-color 0.2s;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            font-weight: 600;
+            transition: 0.2s;
         }
 
         .back-link:hover {
-            background-color: rgba(0,0,0,0.05);
             color: var(--primary);
+            border-color: var(--primary);
         }
 
         .card { 
-            background: white; 
+            background: var(--card-bg); 
             padding: 30px 25px; 
             border-radius: 24px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06); 
-            max-width: 450px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+            max-width: 500px; 
             width: 100%; 
             border-top: 6px solid var(--primary);
             margin: 0 auto;
@@ -74,15 +128,13 @@
             font-weight: 600;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 20px; }
 
         label { 
             display: block; 
             margin-bottom: 8px;
             font-weight: 600; 
-            color: #475569; 
+            color: var(--label); 
             font-size: 0.9rem;
         }
 
@@ -93,8 +145,9 @@
             border-radius: 14px; 
             font-size: 1rem; 
             outline: none; 
+            background-color: var(--input-bg);
+            color: var(--text);
             transition: all 0.2s ease;
-            background-color: white;
             font-family: inherit;
         }
 
@@ -107,10 +160,7 @@
             background-size: 16px;
         }
 
-        input:focus, select:focus { 
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
-        }
+        input:focus, select:focus { border-color: var(--primary); }
 
         button { 
             background: var(--primary); 
@@ -121,20 +171,127 @@
             margin-top: 12px; 
         }
 
-        button:hover {
-            background: var(--primary-light);
-            transform: translateY(-1px);
-        }
-
         .btn-clear { 
-            background: white; 
-            color: #475569; 
+            background: transparent; 
+            color: var(--label); 
             border: 2px solid var(--border);
             margin-top: 10px; 
         }
 
-        .btn-clear:hover {
-            background: #f8fafc;
+        /* ===== SLIDER DE EDAD ===== */
+        .edad-slider-container {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 20px 15px;
+            margin-top: 15px;
+        }
+
+        .edad-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .edad-titulo {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+
+        .edad-valor {
+            background: var(--primary);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .rango-edad {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0 15px 0;
+            color: var(--label);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0 5px;
+        }
+
+        .rango-edad span {
+            text-align: center;
+            flex: 1;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: var(--slider-track);
+            border-radius: 10px;
+            outline: none;
+            margin: 15px 0;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(63, 81, 181, 0.5);
+            border: 3px solid white;
+            transition: transform 0.1s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+
+        .peso-estimado {
+            text-align: center;
+            margin: 20px 0 15px 0;
+            padding: 12px;
+            background: var(--success-bg);
+            border-radius: 30px;
+            border: 1px solid var(--success-border);
+            font-size: 1rem;
+        }
+
+        .peso-valor {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-left: 8px;
+        }
+
+        .aplicar-peso {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .aplicar-peso:hover {
+            background: var(--primary-light);
         }
 
         #resultado-caja { 
@@ -153,12 +310,17 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        #texto-med { 
-            color: #64748b; 
-            font-size: 0.9rem;
-            display: block;
-            margin-bottom: 8px;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
+
+        .dosis-valor.nuevo-calculo {
+            animation: pulse 0.3s ease;
+        }
+
+        #texto-med { color: var(--label); font-size: 0.9rem; display: block; margin-bottom: 8px; }
 
         .dosis-valor { 
             font-size: 2.2rem; 
@@ -166,13 +328,25 @@
             font-weight: 800; 
             display: block; 
             margin: 8px 0 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            padding: 5px;
+            border-radius: 10px;
         }
 
-        .frecuencia { 
-            color: #2563eb; 
-            font-weight: 600; 
-            display: block;
-            margin-bottom: 8px;
+        .dosis-valor:hover {
+            opacity: 0.8;
+            background: rgba(63, 81, 181, 0.05);
+        }
+
+        .frecuencia { color: #2563eb; font-weight: 600; display: block; margin-bottom: 8px; }
+
+        .dosis-diaria {
+            font-size: 0.85rem;
+            color: var(--gray-light);
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border);
         }
 
         .max-alert { 
@@ -196,15 +370,60 @@
             padding-top: 20px;
         }
 
+        /* ===== FOOTER CON CRÉDITOS CORREGIDO ===== */
+        .version-footer {
+            font-size: 0.75rem;
+            margin-top: 20px;
+            color: var(--gray-light);
+            text-align: center;
+            line-height: 1.5;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+        }
+        
+        .creditos {
+            font-weight: 500;
+            color: var(--label);
+            margin-top: 5px;
+        }
+        
+        .creditos span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .toast-copiado {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 2000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { bottom: 0; opacity: 0; }
+            to { bottom: 20px; opacity: 1; }
+        }
+
         @media (max-width: 480px) {
             body { padding: 12px; }
             .card { padding: 20px 16px; }
             h2 { font-size: 1.3rem; }
             .dosis-valor { font-size: 1.8rem; }
+            .rango-edad { font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
+
+<button class="theme-toggle" id="themeBtn" onclick="ui.toggleTheme()">🌓</button>
 
 <a href="https://programassaludvenezuela.blogspot.com/" class="back-link">🏠 Volver al Menú</a>
 
@@ -226,16 +445,43 @@
 
     <div class="form-group">
         <label>3. Peso del niño (kg):</label>
-        <input type="number" id="peso" placeholder="Ej. 12.5" step="0.1">
+        <input type="number" id="peso" placeholder="Ej. 12.5" step="0.1" inputmode="decimal">
+        
+        <!-- SLIDER DE EDAD -->
+        <div class="edad-slider-container">
+            <div class="edad-header">
+                <span class="edad-titulo">Calcular por edad</span>
+                <span class="edad-valor" id="edadDisplay">1 año</span>
+            </div>
+            
+            <div class="rango-edad">
+                <span>1 mes</span>
+                <span>1 año</span>
+                <span>2 años</span>
+                <span>3 años</span>
+                <span>4 años</span>
+                <span>5 años</span>
+            </div>
+            
+            <input type="range" min="1" max="60" value="12" class="slider" id="edadSlider">
+            
+            <div class="peso-estimado">
+                Peso estimado: <span class="peso-valor" id="pesoValor">10.5 kg</span>
+            </div>
+            
+            <button class="aplicar-peso" id="aplicarPesoBtn">✔ Aplicar este peso</button>
+        </div>
     </div>
 
-    <button onclick="calcular()">Calcular Dosis</button>
-    <button class="btn-clear" onclick="limpiar()">Limpiar</button>
+    <button onclick="ui.calcularYMostrar()">Calcular Dosis</button>
+    <button class="btn-clear" onclick="ui.limpiar()">Limpiar</button>
 
     <div id="resultado-caja">
         <span id="texto-med"></span>
-        <span class="dosis-valor" id="res-ml">0 ml</span>
+        <span class="dosis-valor" id="res-ml" onclick="ui.copiarDosis()">0 ml</span>
         <span class="frecuencia" id="frecuencia"></span>
+        
+        <div class="dosis-diaria" id="dosis-diaria"></div>
         <span id="aviso-max" class="max-alert" style="display: none;">⚠️ DOSIS MÁXIMA</span>
     </div>
 
@@ -243,13 +489,24 @@
         <b>Dosis estándar:</b> Acetaminofén 15mg/kg • Ibuprofeno 10mg/kg<br>
         <i>Uso exclusivo para personal de salud.</i>
     </div>
+
+    <!-- ===== FOOTER CORREGIDO CON CRÉDITOS ===== -->
+    <div class="version-footer">
+        <div>PSV - Programa Salud Venezuela</div>
+        <div class="creditos">
+            design & development by <span>Dr. Jailber Guerra</span> - Epidemiólogo
+        </div>
+        <div style="font-size: 0.7rem; margin-top: 5px; opacity: 0.7;">v2.5 | Modo oscuro para guardias 🌙</div>
+    </div>
 </main>
 
 <script>
+    // ============ MÓDULO DE DATOS ============
     const datosMed = {
         acetaminofen: {
             nombre: 'Acetaminofén',
             frecuencia: "Cada 6 horas",
+            horasIntervalo: 6,
             dosisBase: 15,
             maxDosisMg: 1000,
             opciones: [
@@ -265,6 +522,7 @@
         ibuprofeno: {
             nombre: 'Ibuprofeno',
             frecuencia: "Cada 8 horas",
+            horasIntervalo: 8,
             dosisBase: 10,
             maxDosisMg: 400,
             opciones: [
@@ -277,57 +535,186 @@
         }
     };
 
-    function actualizarPresentaciones() {
-        const medKey = document.getElementById('medicamento').value;
-        const selectPres = document.getElementById('presentacion');
-        selectPres.innerHTML = ''; 
+    // ============ MÓDULO DE CÁLCULOS ============
+    const calculos = {
+        dosisPorPeso: (peso, base) => peso * base,
         
-        datosMed[medKey].opciones.forEach((opt, index) => {
-            let el = document.createElement("option");
-            el.textContent = opt.nombre;
-            el.value = index;
-            selectPres.appendChild(el);
-        });
-    }
-
-    function calcular() {
-        const peso = parseFloat(document.getElementById('peso').value);
-        const medKey = document.getElementById('medicamento').value;
-        const presIndex = document.getElementById('presentacion').value;
+        mlPorConcentracion: (mg, conc, vol) => (mg * vol) / conc,
         
-        if (!peso || peso <= 0) {
-            alert("Ingresa el peso del paciente.");
-            return;
+        dosisDiaria: (dosisMl, horasIntervalo) => (24 / horasIntervalo) * dosisMl,
+        
+        pesoPorEdad: (edadMeses) => {
+            if (edadMeses <= 1) return 3.5;
+            if (edadMeses <= 3) return 5.5;
+            if (edadMeses <= 6) return 7.5;
+            if (edadMeses <= 12) return 9.5;
+            if (edadMeses <= 24) return 11.5;
+            if (edadMeses <= 36) return 13.5;
+            if (edadMeses <= 48) return 16.0;
+            if (edadMeses <= 60) return 18.5;
+            return 9.5 + ((edadMeses - 12) * 0.25);
+        },
+        
+        formatearEdad: (meses) => {
+            if (meses < 12) {
+                return meses + (meses === 1 ? ' mes' : ' meses');
+            } else {
+                const años = Math.floor(meses / 12);
+                const mesesRest = meses % 12;
+                if (mesesRest === 0) {
+                    return años + (años === 1 ? ' año' : ' años');
+                } else {
+                    return años + ' año' + (años > 1 ? 's' : '') + ' ' + mesesRest + ' meses';
+                }
+            }
         }
+    };
 
-        const med = datosMed[medKey];
-        const pres = med.opciones[presIndex];
-
-        let mgNecesarios = peso * med.dosisBase;
-        let maxAlcanzada = false;
+    // ============ MÓDULO DE INTERFAZ ============
+    const ui = {
+        init: function() {
+            this.cargarTema();
+            this.actualizarPresentaciones();
+            this.setupEventListeners();
+            this.initSlider();
+        },
         
-        if (mgNecesarios > med.maxDosisMg) {
-            mgNecesarios = med.maxDosisMg;
-            maxAlcanzada = true;
+        setupEventListeners: function() {
+            document.getElementById('medicamento').addEventListener('change', () => this.actualizarPresentaciones());
+            
+            document.getElementById('peso').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') this.calcularYMostrar();
+            });
+        },
+        
+        initSlider: function() {
+            const slider = document.getElementById('edadSlider');
+            const edadDisplay = document.getElementById('edadDisplay');
+            const pesoValor = document.getElementById('pesoValor');
+            const aplicarBtn = document.getElementById('aplicarPesoBtn');
+            
+            const actualizarSlider = () => {
+                const meses = parseInt(slider.value);
+                edadDisplay.textContent = calculos.formatearEdad(meses);
+                const peso = calculos.pesoPorEdad(meses);
+                pesoValor.textContent = peso.toFixed(1) + ' kg';
+            };
+            
+            slider.addEventListener('input', actualizarSlider);
+            
+            aplicarBtn.addEventListener('click', () => {
+                const peso = calculos.pesoPorEdad(parseInt(slider.value));
+                document.getElementById('peso').value = peso.toFixed(1);
+                
+                aplicarBtn.style.background = '#10b981';
+                aplicarBtn.textContent = '✓ Peso aplicado';
+                setTimeout(() => {
+                    aplicarBtn.style.background = 'var(--primary)';
+                    aplicarBtn.textContent = '✔ Aplicar este peso';
+                }, 1500);
+            });
+            
+            actualizarSlider();
+        },
+        
+        toggleTheme: function() {
+            const isDark = document.body.classList.toggle('dark-theme');
+            localStorage.setItem('psv-theme', isDark ? 'dark' : 'light');
+        },
+        
+        cargarTema: function() {
+            if (localStorage.getItem('psv-theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+        },
+        
+        actualizarPresentaciones: function() {
+            const medKey = document.getElementById('medicamento').value;
+            const selectPres = document.getElementById('presentacion');
+            selectPres.innerHTML = ''; 
+            
+            datosMed[medKey].opciones.forEach((opt, index) => {
+                let el = document.createElement("option");
+                el.textContent = opt.nombre;
+                el.value = index;
+                selectPres.appendChild(el);
+            });
+        },
+        
+        calcularYMostrar: function() {
+            const peso = parseFloat(document.getElementById('peso').value);
+            const medKey = document.getElementById('medicamento').value;
+            const presIndex = document.getElementById('presentacion').value;
+            
+            if (!peso || peso <= 0) {
+                alert("❌ Ingresa el peso del paciente.");
+                return;
+            }
+            
+            if (peso < 2 || peso > 70) {
+                if (!confirm("⚠️ El peso ingresado (" + peso + " kg) parece fuera de rango pediátrico. ¿Estás seguro?")) {
+                    return;
+                }
+            }
+
+            const med = datosMed[medKey];
+            const pres = med.opciones[presIndex];
+            
+            let mgNecesarios = calculos.dosisPorPeso(peso, med.dosisBase);
+            let maxAlcanzada = false;
+            
+            if (mgNecesarios > med.maxDosisMg) {
+                mgNecesarios = med.maxDosisMg;
+                maxAlcanzada = true;
+            }
+
+            const mlFinal = calculos.mlPorConcentracion(mgNecesarios, pres.conc, pres.vol);
+            const dosisDiaria = calculos.dosisDiaria(mlFinal, med.horasIntervalo);
+
+            const resultadoCaja = document.getElementById('resultado-caja');
+            const textoMed = document.getElementById('texto-med');
+            const resMl = document.getElementById('res-ml');
+            const frecuencia = document.getElementById('frecuencia');
+            const dosisDiariaEl = document.getElementById('dosis-diaria');
+            const avisoMax = document.getElementById('aviso-max');
+            
+            textoMed.innerText = med.nombre + ":";
+            resMl.innerText = mlFinal.toFixed(1) + " ml";
+            frecuencia.innerText = med.frecuencia;
+            dosisDiariaEl.innerHTML = `💊 Dosis máxima diaria: <strong>${dosisDiaria.toFixed(1)} ml</strong> (${24/med.horasIntervalo} dosis)`;
+            avisoMax.style.display = maxAlcanzada ? 'block' : 'none';
+            
+            resMl.classList.add('nuevo-calculo');
+            setTimeout(() => resMl.classList.remove('nuevo-calculo'), 300);
+            
+            resultadoCaja.style.display = 'block';
+        },
+        
+        limpiar: function() {
+            document.getElementById('peso').value = "";
+            document.getElementById('resultado-caja').style.display = 'none';
+        },
+        
+        copiarDosis: function() {
+            const dosisTexto = document.getElementById('res-ml').innerText;
+            
+            navigator.clipboard.writeText(dosisTexto).then(() => {
+                const toast = document.createElement('div');
+                toast.className = 'toast-copiado';
+                toast.innerText = '✅ Dosis copiada: ' + dosisTexto;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 2000);
+            }).catch(err => {
+                alert('No se pudo copiar');
+            });
         }
+    };
 
-        const mlFinal = (mgNecesarios * pres.vol) / pres.conc;
-
-        document.getElementById('resultado-caja').style.display = 'block';
-        document.getElementById('texto-med').innerText = med.nombre + ":";
-        document.getElementById('res-ml').innerText = mlFinal.toFixed(1) + " ml";
-        document.getElementById('frecuencia').innerText = med.frecuencia;
-        document.getElementById('aviso-max').style.display = maxAlcanzada ? 'block' : 'none';
-    }
-
-    function limpiar() {
-        document.getElementById('peso').value = "";
-        document.getElementById('resultado-caja').style.display = 'none';
-    }
-
-    // Inicializar
-    document.getElementById('medicamento').addEventListener('change', actualizarPresentaciones);
-    actualizarPresentaciones();
+    // Inicializar todo
+    ui.init();
 </script>
 
 </body>
