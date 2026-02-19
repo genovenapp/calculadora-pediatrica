@@ -3,118 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Pediátrica Multi-Dosis</title>
+    <meta name="description" content="Calculadora médica PSV - Dosis pediátricas">
+    <title>Calculadora Médica PSV</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); max-width: 450px; width: 100%; }
-        h2 { color: var(--primary); text-align: center; margin-bottom: 20px; }
-        label { display: block; margin-top: 12px; font-weight: 600; color: #475569; }
-        select, input, button { width: 100%; padding: 12px; margin-top: 8px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; box-sizing: border-box; }
-        select:focus, input:focus { border-color: var(--primary); }
-        button { background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; }
-        button:hover { background: #1d4ed8; }
-        #resultado-caja { margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 12px; text-align: center; display: none; border: 1px solid #bfdbfe; }
-        .dosis-valor { font-size: 24px; color: var(--primary); font-weight: 800; display: block; }
-        .info-extra { font-size: 13px; color: #64748b; margin-top: 15px; line-height: 1.4; }
-        
-        /* Estilo para el botón de retorno */
-        .btn-volver {
-            display: inline-flex; align-items: center; text-decoration: none; 
-            color: #ffffff; font-weight: bold; font-size: 14px; background: #3f51b5; 
-            padding: 12px 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 20px; transition: 0.3s;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        .btn-volver:hover { background: #283593; transform: scale(1.02); }
+
+        :root { 
+            --primary: #3f51b5;
+            --primary-light: #5c6bc0;
+            --bg: #f4f7f6; 
+            --text: #2c3e50;
+            --border: #e2e8f0;
+            --success-bg: #eff6ff;
+            --success-border: #bfdbfe;
+            --alert: #dc2626;
+            --gray-light: #94a3b8;
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: var(--bg); 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            min-height: 100vh;
+            padding: 20px; 
+            margin: 0;
+            color: var(--text);
+        }
+
+        .back-link {
+            align-self: flex-start;
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .back-link:hover {
+            background-color: rgba(0,0,0,0.05);
+            color: var(--primary);
+        }
+
+        .card { 
+            background: white; 
+            padding: 30px 25px; 
+            border-radius: 24px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06); 
+            max-width: 450px; 
+            width: 100%; 
+            border-top: 6px solid var(--primary);
+            margin: 0 auto;
+        }
+
+        h2 { 
+            color: var(--text); 
+            text-align: center; 
+            margin: 0 0 24px 0; 
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label { 
+            display: block; 
+            margin-bottom: 8px;
+            font-weight: 600; 
+            color: #475569; 
+            font-size: 0.9rem;
+        }
+
+        select, input, button { 
+            width: 100%; 
+            padding: 14px 16px; 
+            border: 2px solid var(--border); 
+            border-radius: 14px; 
+            font-size: 1rem; 
+            outline: none; 
+            transition: all 0.2s ease;
+            background-color: white;
+            font-family: inherit;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+        }
+
+        input:focus, select:focus { 
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
+        }
+
+        button { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            font-weight: 600; 
+            cursor: pointer; 
+            margin-top: 12px; 
+        }
+
+        button:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-clear { 
+            background: white; 
+            color: #475569; 
+            border: 2px solid var(--border);
+            margin-top: 10px; 
+        }
+
+        .btn-clear:hover {
+            background: #f8fafc;
+        }
+
+        #resultado-caja { 
+            margin-top: 24px; 
+            padding: 20px; 
+            background: var(--success-bg); 
+            border-radius: 18px; 
+            text-align: center; 
+            display: none; 
+            border: 1px solid var(--success-border);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #texto-med { 
+            color: #64748b; 
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .dosis-valor { 
+            font-size: 2.2rem; 
+            color: var(--primary); 
+            font-weight: 800; 
+            display: block; 
+            margin: 8px 0 4px;
+        }
+
+        .frecuencia { 
+            color: #2563eb; 
+            font-weight: 600; 
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .max-alert { 
+            color: var(--alert); 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            margin-top: 12px; 
+            display: block;
+            padding: 8px;
+            background-color: rgba(220, 38, 38, 0.1);
+            border-radius: 30px;
+        }
+
+        .info-extra { 
+            font-size: 0.8rem; 
+            color: var(--gray-light); 
+            margin-top: 24px; 
+            text-align: center; 
+            line-height: 1.6;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .card { padding: 20px 16px; }
+            h2 { font-size: 1.3rem; }
+            .dosis-valor { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
-<a href="https://programassaludvenezuela.blogspot.com/p/blog-page.html" class="btn-volver">
-    <span style="margin-right: 10px;">🏠</span> Volver al Menú Principal
-</a>
+<a href="https://programassaludvenezuela.blogspot.com/" class="back-link">🏠 Volver al Menú</a>
 
-<div class="card">
-    <h2>Calculadora Médica</h2>
+<main class="card">
+    <h2>🔢 Calculadora Médica</h2>
     
-    <label>1. Selecciona Medicamento:</label>
-    <select id="medicamento" onchange="actualizarPresentaciones()">
-        <option value="acetaminofen">Acetaminofén (Paracetamol)</option>
-        <option value="ibuprofeno">Ibuprofeno</option>
-    </select>
+    <div class="form-group">
+        <label>1. Medicamento:</label>
+        <select id="medicamento">
+            <option value="acetaminofen">Acetaminofén (Paracetamol)</option>
+            <option value="ibuprofeno">Ibuprofeno</option>
+        </select>
+    </div>
 
-    <label>2. Presentación:</label>
-    <select id="presentacion"></select>
+    <div class="form-group">
+        <label>2. Presentación:</label>
+        <select id="presentacion"></select>
+    </div>
 
-    <label>3. Peso del niño (kg):</label>
-    <input type="number" id="peso" placeholder="Ej. 10" step="0.1">
+    <div class="form-group">
+        <label>3. Peso del niño (kg):</label>
+        <input type="number" id="peso" placeholder="Ej. 12.5" step="0.1">
+    </div>
 
-    <button onclick="calcular()">Calcular Dosis Exacta</button>
+    <button onclick="calcular()">Calcular Dosis</button>
+    <button class="btn-clear" onclick="limpiar()">Limpiar</button>
 
     <div id="resultado-caja">
         <span id="texto-med"></span>
         <span class="dosis-valor" id="res-ml">0 ml</span>
-        <span id="frecuencia"></span>
+        <span class="frecuencia" id="frecuencia"></span>
+        <span id="aviso-max" class="max-alert" style="display: none;">⚠️ DOSIS MÁXIMA</span>
     </div>
 
     <div class="info-extra">
-        ⚠️ <b>Importante:</b> Los cálculos se basan en dosis estándar (Acetaminofén 15mg/kg e Ibuprofeno 10mg/kg). <b>Nunca automedique sin supervisión médica.</b>
+        <b>Dosis estándar:</b> Acetaminofén 15mg/kg • Ibuprofeno 10mg/kg<br>
+        <i>Uso exclusivo para personal de salud.</i>
     </div>
-</div>
+</main>
 
 <script>
     const datosMed = {
         acetaminofen: {
+            nombre: 'Acetaminofén',
             frecuencia: "Cada 6 horas",
             dosisBase: 15,
+            maxDosisMg: 1000,
             opciones: [
-                { nombre: "Gotas (100mg/1ml)", factor: 0.15 },
-                { nombre: "Jarabe (120mg/5ml)", factor: 0.625 },
-                { nombre: "Jarabe Fuerte (250mg/5ml)", factor: 0.3 }
+                { nombre: "Gotas 100 mg / 1 ml", conc: 100, vol: 1 },
+                { nombre: "Jarabe 100 mg / 5 ml", conc: 100, vol: 5 },
+                { nombre: "Jarabe 120 mg / 5 ml", conc: 120, vol: 5 },
+                { nombre: "Jarabe 150 mg / 5 ml", conc: 150, vol: 5 },
+                { nombre: "Jarabe 160 mg / 5 ml", conc: 160, vol: 5 },
+                { nombre: "Jarabe 180 mg / 5 ml", conc: 180, vol: 5 },
+                { nombre: "Jarabe 250 mg / 5 ml", conc: 250, vol: 5 }
             ]
         },
         ibuprofeno: {
+            nombre: 'Ibuprofeno',
             frecuencia: "Cada 8 horas",
             dosisBase: 10,
+            maxDosisMg: 400,
             opciones: [
-                { nombre: "Suspensión (100mg/5ml)", factor: 0.5 },
-                { nombre: "Suspensión Forte (200mg/5ml)", factor: 0.25 }
+                { nombre: "Gotas 100 mg / 1 ml", conc: 100, vol: 1 },
+                { nombre: "Suspensión 100 mg / 5 ml", conc: 100, vol: 5 },
+                { nombre: "Suspensión 150 mg / 5 ml", conc: 150, vol: 5 },
+                { nombre: "Suspensión 200 mg / 5 ml", conc: 200, vol: 5 },
+                { nombre: "Suspensión 40 mg / ml", conc: 40, vol: 1 }
             ]
         }
     };
 
     function actualizarPresentaciones() {
-        const med = document.getElementById('medicamento').value;
+        const medKey = document.getElementById('medicamento').value;
         const selectPres = document.getElementById('presentacion');
-        selectPres.innerHTML = ""; 
+        selectPres.innerHTML = ''; 
         
-        datosMed[med].opciones.forEach(opt => {
+        datosMed[medKey].opciones.forEach((opt, index) => {
             let el = document.createElement("option");
             el.textContent = opt.nombre;
-            el.value = opt.factor;
+            el.value = index;
             selectPres.appendChild(el);
         });
     }
 
     function calcular() {
         const peso = parseFloat(document.getElementById('peso').value);
-        const factor = parseFloat(document.getElementById('presentacion').value);
         const medKey = document.getElementById('medicamento').value;
+        const presIndex = document.getElementById('presentacion').value;
         
-        if (peso > 0) {
-            const dosisFinal = (peso * factor).toFixed(1);
-            document.getElementById('resultado-caja').style.display = 'block';
-            document.getElementById('texto-med').innerText = "Dosis de " + medKey.charAt(0).toUpperCase() + medKey.slice(1) + ":";
-            document.getElementById('res-ml').innerText = dosisFinal + " ml";
-            document.getElementById('frecuencia').innerText = datosMed[medKey].frecuencia;
-        } else {
-            alert("Por favor ingresa un peso válido.");
+        if (!peso || peso <= 0) {
+            alert("Ingresa el peso del paciente.");
+            return;
         }
+
+        const med = datosMed[medKey];
+        const pres = med.opciones[presIndex];
+
+        let mgNecesarios = peso * med.dosisBase;
+        let maxAlcanzada = false;
+        
+        if (mgNecesarios > med.maxDosisMg) {
+            mgNecesarios = med.maxDosisMg;
+            maxAlcanzada = true;
+        }
+
+        const mlFinal = (mgNecesarios * pres.vol) / pres.conc;
+
+        document.getElementById('resultado-caja').style.display = 'block';
+        document.getElementById('texto-med').innerText = med.nombre + ":";
+        document.getElementById('res-ml').innerText = mlFinal.toFixed(1) + " ml";
+        document.getElementById('frecuencia').innerText = med.frecuencia;
+        document.getElementById('aviso-max').style.display = maxAlcanzada ? 'block' : 'none';
     }
 
+    function limpiar() {
+        document.getElementById('peso').value = "";
+        document.getElementById('resultado-caja').style.display = 'none';
+    }
+
+    // Inicializar
+    document.getElementById('medicamento').addEventListener('change', actualizarPresentaciones);
     actualizarPresentaciones();
 </script>
 
 </body>
 </html>
-
